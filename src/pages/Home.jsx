@@ -1,16 +1,23 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+// src/pages/Home.jsx
+import React from "react";
+import { Link } from "react-router-dom";
+import { ContactCard } from "../components/ContactCard";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Home = () => {
+  const { store, deleteContact } = useGlobalReducer();
 
-  const {store, dispatch} =useGlobalReducer()
-
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-		</div>
-	);
-}; 
+  return (
+    <div className="container">
+      <h1>Lista de contactos</h1>
+      <div className="list-group">
+        {store.contacts.map((contact) => (
+          <ContactCard key={contact.id} contact={contact} onDelete={deleteContact} />
+        ))}
+      </div>
+      <Link to="/add" className="btn btn-success mt-3">
+        Add Contact
+      </Link>
+    </div>
+  );
+};
